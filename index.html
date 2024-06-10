@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Art Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Make Your Own Sticker</h1>
+        </header>
+        <main>
+            <!-- Canvas -->
+            <div id="art-container">
+                <div class="ignore">
+                    <!-- Images Goes here -->
+                     <div class="selected"></div>
+                </div>
+            </div>
+            <div id="controls">
+                <div id="tabs">
+
+                    <input type="radio" id="img-lib" name ="tab-menu" value="img-lib" checked>
+                    <label for="img-lib">Image Library</label>
+
+                    <input type="radio" id="editor" name ="tab-menu" value="editor">
+                    <label for="editor">Editor</label>
+                </div>
+                <div class="control-group">
+                    <!-- Selected Photo Editor -->
+                     <button onclick="deselect()" class="deselect">Deselect Current</button>
+                     <h3>Background Edit</h3>
+                     <!-- Background Mode Plain color or gradient -->
+                     <label for="bg-mode">Background Mode:</label>
+                     <select name="bg-mode" id="bg-mode">
+                        <option value="color" selected>Color</option>
+                        <option value="gradient">Gradient</option>
+                     </select>
+                     <!-- Hidden background option shows up when corresponding mode is selected -->
+                      <!-- Hidden BG color Settings -->
+                     <div class="bg-hidden" id="bg-color-hidden" style="display: flex;">
+                        <label for="bg-color">Background Color</label>
+                        <input type="color" id="bg-color" name="bg-color" value="#FFFFFF">
+                     </div>
+                     <!-- Hidden BG Gradient Settings -->
+                     <div class="bg-hidden" id="bg-gradient-hidden">
+                        <label for="bg-gradient-type">Gradient Type</label>
+                        <select name="bg-gradient-type" id="bg-gradient-type">
+                            <option value="linear" selected>Linear Gradient</option>
+                            <option value="radial">Radial Gradient</option>
+                        </select>
+                        <div id="gradient-settings">
+                            <button onclick="addGradientColor()">+ Color</button>
+                            <button onclick="removeGradientColor()">- Color</button>
+                            <div id ="linear-gradient-degree">
+                                <label for="gradient-clr-degree">Gradient Rotation</label>
+                                <input type="range" id="gradient-clr-degree" name="gradient-clr-degree" min="0" max="360" value="0">
+                            </div>
+                            <div style="display: none;" id="gradient-clr-setting-hidden" class="gradient">
+                                <label for="gradient-clr" id="gradient-clr-label"></label>
+                                <input type="color" id="gradient-clr" class="gradient-clr" name="gradient-clr" value="#000000">
+                                <label for="gradient-position" id="gradient-position-label"></label>
+                                <input type="input" id="gradient-position" class="gradient-position" name="gradient-position" value="0">
+                            </div>
+                        </div>
+                     </div>
+                    <h3>Image Edit</h3>
+                    <!-- Blend Modes -->
+
+                    <label for="blend-mode">Blend Mode:</label>
+                    <select id="blend-mode" class="blend-mode" >
+                        <option value="normal">Normal</option>
+                        <option value="multiply">Multiply</option>
+                        <option value="screen">Screen</option>
+                        <option value="overlay">Overlay</option>
+                    </select>
+
+                    <!-- Image Blur -->
+                    <label for="bluring">Blur:</label>
+                    <input type="range" id ="bluring" class="bluring" name="bluring" min="0" max="10" value="0">
+
+                    <!-- Image Saturation -->
+                    <label for="saturation">Saturation</label>
+                    <input type="range" id ="saturation" class="saturation" name="saturation" min="0" max="100" value="100">
+                    
+                    <!-- Image Glow -->
+                    <label for="glow">Glow:</label>
+                    <input type="range" id ="glow" class="glow" name="glow" min="0" max="10" step="1" value="0">
+
+                    <!-- Image Glow Color -->
+                    <label for="glow-color">Glow Color:</label>
+                    <input type="color" id ="glow-color" class="glow-color" name="glow-color" value="#000000">
+
+                    <!-- Image Layer -->
+                    <label for="layer">Layer:</label>
+                    <input type="input" id="layer" class="layer" name="layer" min="0" max="100" value="0">
+
+                    <!-- Horizontal Position -->
+                    <label for="position-x">Position X:</label>
+                    <input type="input" id="position-x" class="position-x" name="position-x" min="0" max="100" value="0">
+                    
+                    <!-- Vertical Position -->
+                    <label for="position-y">Position Y:</label>
+                    <input type="input" id="position-y" class="position-y" name="position-y" min="0" max="100" value="0">
+
+                    <!-- Rotation in degreee -->
+                    <label for="rotate">Rotate:</label>
+                    <input type="range" id="rotate" class="rotate-img" name="rotate" min="0" max="360" value="0">
+
+                    <!-- Relative scale to initial size -->
+                    <label for="scale">Scale:</label>
+                    <input type="range" id="scale" class="scale-img" name="scale" min="0.1" max="5" step=".001" value="1">
+
+                    <!-- Image Opacity -->
+                    <label for="opacity">Opacity:</label>
+                    <input type="range" id="opacity" class="opacity-img" name="opacity" min=".1" max="1" step=".001" value="1">
+                </div>
+
+                <!-- Image Library Click to add an Image to Canvas -->
+                <div id = "image-adder">
+                    <h3>Image Library</h3>
+                    <label for="image-upload"class="uploadImage">&plus; Upload</label>
+                    <input type="file" id="image-upload" style="display: none;" accept="image/*">
+                    <button onclick="addImage(this)">
+                        <img src="Images/bling-bling.gif" title="bling-bling.gif">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/circle.png" title="circle.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-cant-talk.png" title="face-cant-talk.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-dead.png" title="face-dead.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-expressionless.png" title="face-expressionless.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-smile.png" title="face-smile.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-very-happy.png" title="face-very-happy.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-wink.gif" title="face-wink.gif">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-wink.png" title="face-wink.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/face-www.gif" title="face-www.gif">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/star.png" title="star.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/tornado.gif" title="tornado.gif">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/triangle.png" title="triangle.png">
+                    </button>
+                    <button onclick="addImage(this)">
+                        <img src="Images/witch-hat.png" title="witch-hat.png">
+                    </button>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>© Art Creator by Howard Cheng</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
