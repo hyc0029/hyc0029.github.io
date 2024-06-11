@@ -371,8 +371,8 @@ label {
         flex-basis: 0;
     }
     .deselect{
-        width: 2rem;
-        height: 90%;
+        width: fit-content;
+        height: 50%;
     }
     .control-group{
         display: none;
