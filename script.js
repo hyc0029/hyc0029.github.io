@@ -133,12 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
         bgHiddenList.forEach(e => {e.style.display = 'none'});
         var toBeShown = document.getElementById(`bg-${e.target.value}-hidden`);
         toBeShown.style.display = 'flex';
+        if(e.target.value == 'color')
+            artContainer.style.backgroundImage = '';
     });
 
     //Background Color Only
     const bgClrPicker = document.getElementById('bg-color');
     bgClrPicker.addEventListener('input', (e) => {
-        artContainer.style.backgroundColor = e.target.value;
+        artContainer.style.background = e.target.value;
+
     });
 
     //Background Gradient
